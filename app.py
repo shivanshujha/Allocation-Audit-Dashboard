@@ -98,7 +98,7 @@ try:
 
     with st.spinner("Loading latest data..."):
         df = load_jainam_data()
-
+        st.success("Google Sheet loaded successfully")
     results = compare_allocations(df)
 
 except Exception as e:

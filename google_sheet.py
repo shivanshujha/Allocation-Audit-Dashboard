@@ -1,4 +1,4 @@
-﻿""" 
+"""
 google_sheet.py
 -----------------------------------
 Loads data from Google Sheets.
@@ -10,7 +10,6 @@ import pandas as pd
 import gspread
 import streamlit as st
 from google.oauth2.service_account import Credentials
-from pathlib import Path
 
 # ==========================================
 # GOOGLE API SCOPES
@@ -21,47 +20,29 @@ SCOPES = [
     "https://www.googleapis.com/auth/drive",
 ]
 
-PROJECT_DIR = Path(__file__).resolve().parent
-SERVICE_ACCOUNT_FILE = PROJECT_DIR / "service_account.json"
-
 
 # ==========================================
 # GOOGLE CLIENT
 # ==========================================
 
-@st.cache_resource
 def get_client():
     """
     Creates Google Sheets client.
     """
 
-    # Streamlit raises when no secrets file exists, so read secrets defensively.
-    # This keeps local runs independent of .streamlit/secrets.toml.
-    try:
-        service_account_info = st.secrets.get("gcp_service_account")
-    except Exception:
-        service_account_info = None
-
     # -------- Streamlit Cloud --------
-    if service_account_info:
+    if "gcp_service_account" in st.secrets:
 
         creds = Credentials.from_service_account_info(
-            service_account_info,
+            st.secrets["gcp_service_account"],
             scopes=SCOPES
         )
 
     # -------- Local Computer --------
     else:
 
-        if not SERVICE_ACCOUNT_FILE.is_file():
-            raise FileNotFoundError(
-                "Google credentials file was not found. Expected it at "
-                f"'{SERVICE_ACCOUNT_FILE}'. Add service_account.json there, "
-                "or configure Streamlit secrets as gcp_service_account."
-            )
-
         creds = Credentials.from_service_account_file(
-            str(SERVICE_ACCOUNT_FILE),
+            "service_account.json",
             scopes=SCOPES
         )
 
@@ -72,19 +53,26 @@ def get_client():
 # LOAD DATA
 # ==========================================
 
-@st.cache_data(ttl=30)
+
 def load_jainam_data():
     """
     Loads Jainam worksheet every 30 seconds.
     """
 
-    client = get_client()
+    st.write("Step 1")
+client = get_client()
 
-    workbook = client.open("All User Details Daily Updated")
+st.write("Step 2")
+workbook = client.open("All User Details Daily Updated")
 
-    worksheet = workbook.worksheet("Jainam")
+st.write("Step 3")
+worksheet = workbook.worksheet("Jainam")
 
-    df = pd.DataFrame(worksheet.get_all_records())
+st.write("Step 4")
+records = worksheet.get_all_records()
+
+st.write("Step 5")
+df = pd.DataFrame(records)
 
     # ==========================================
     # Clean Column Names
