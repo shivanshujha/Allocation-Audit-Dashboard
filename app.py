@@ -91,12 +91,23 @@ st.divider()
 # ==========================================================
 # LOAD DATA
 # ==========================================================
+# LOAD DATA
+# ==========================================================
 
-with st.spinner("Loading latest data..."):
+try:
 
-    df = load_jainam_data()
+    with st.spinner("Loading latest data..."):
+        df = load_jainam_data()
 
-results = compare_allocations(df)
+    results = compare_allocations(df)
+
+except Exception as e:
+
+    st.error("Application Error")
+
+    st.exception(e)
+
+    st.stop()
 
 # ==========================================================
 # TABLE + KPI
