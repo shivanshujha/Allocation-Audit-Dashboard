@@ -1,0 +1,25 @@
+# Google credentials
+service_account.json
+.streamlit/secrets.toml
+
+# Virtual environment
+.venv/
+venv/
+pyvenv.cfg
+
+# Python
+__pycache__/
+*.pyc
+
+# Logs
+*.log
+
+# Temporary files
+temp_*.py
+
+# VS Code
+.vscode/
+
+# OS files
+Thumbs.db
+.DS_Store
