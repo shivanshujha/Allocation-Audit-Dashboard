@@ -59,20 +59,11 @@ def load_jainam_data():
     Loads Jainam worksheet every 30 seconds.
     """
 
-    st.write("Step 1")
-client = get_client()
-
-st.write("Step 2")
-workbook = client.open("All User Details Daily Updated")
-
-st.write("Step 3")
-worksheet = workbook.worksheet("Jainam")
-
-st.write("Step 4")
-records = worksheet.get_all_records()
-
-st.write("Step 5")
-df = pd.DataFrame(records)
+    client = get_client()
+    workbook = client.open("test_streamlit")
+    worksheet = workbook.worksheet("Jainam")
+    records = worksheet.get_all_records()
+    df = pd.DataFrame(records)
 
     # ==========================================
     # Clean Column Names

@@ -5,7 +5,7 @@ Allocation Audit Dashboard
 """
 
 import streamlit as st
-from streamlit_autorefresh import st_autorefresh
+import streamlit.components.v1 as components
 from google_sheet import load_jainam_data
 from compare import compare_allocations
 from utils import get_last_refresh, create_excel
@@ -72,9 +72,13 @@ tbody tr td{
 # AUTO REFRESH
 # ==========================================================
 
-st_autorefresh(
-    interval=30000,
-    key="dashboard_refresh"
+components.html(
+    """
+    <script>
+    setTimeout(() => window.parent.location.reload(), 30000);
+    </script>
+    """,
+    height=0,
 )
 # ==========================================================
 # HEADER
@@ -94,6 +98,8 @@ st.divider()
 # LOAD DATA
 # ==========================================================
 
+results = None
+
 try:
 
     with st.spinner("Loading latest data..."):
@@ -108,6 +114,8 @@ except Exception as e:
     st.exception(e)
 
     st.stop()
+
+    raise SystemExit(1)
 
 # ==========================================================
 # TABLE + KPI
