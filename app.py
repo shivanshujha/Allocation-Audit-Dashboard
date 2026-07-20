@@ -1,4 +1,4 @@
-"""
+﻿"""
 app.py
 ---------------------------------------
 Allocation Audit Dashboard
@@ -16,7 +16,7 @@ from utils import get_last_refresh, create_excel
 
 st.set_page_config(
     page_title="Allocation Audit Dashboard",
-    page_icon="📊",
+    page_icon="ðŸ“Š",
     layout="wide"
 )
 
@@ -84,7 +84,7 @@ components.html(
 # HEADER
 # ==========================================================
 
-st.title("📊 Allocation Audit Dashboard")
+st.title("ðŸ“Š Allocation Audit Dashboard")
 
 st.caption(
     f"Last Refresh : {get_last_refresh()}  |  Auto Refresh : Every 30 Seconds"
@@ -129,11 +129,11 @@ left, right = st.columns([4,1])
 
 with left:
 
-    st.subheader("❌ Allocation Mismatch Users")
+    st.subheader("âŒ Allocation Mismatch Users")
 
     if results["mismatch_df"].empty:
 
-        st.success("🎉 All Users Matched")
+        st.success("ðŸŽ‰ All Users Matched")
 
     else:
 
@@ -171,7 +171,11 @@ with left:
             )
         )
 
-        st.table(styled)
+        st.dataframe(
+            styled,
+            use_container_width=True,
+            hide_index=True,
+        )
 
 
 # ==========================================================
@@ -180,26 +184,55 @@ with left:
 
 with right:
 
-    st.metric(
-        "👥 Total Users",
-        results["total_users"]
-    )
+    col1, col2, col3, col4 = st.columns(4)
 
-    st.metric(
-        "✅ Matched",
-        results["matched_users"]
-    )
+    with col1:
+        st.markdown(f"""
+        <div style="
+        background:#E3F2FD;
+        padding:20px;
+        border-radius:15px;
+        border-left:8px solid #2196F3;">
+        <h5>👥 Total Users</h5>
+        <h2>{results['total_users']}</h2>
+        </div>
+        """, unsafe_allow_html=True)
 
-    st.metric(
-        "❌ Mismatch",
-        results["mismatch_users"]
-    )
+    with col2:
+        st.markdown(f"""
+        <div style="
+        background:#E8F5E9;
+        padding:20px;
+        border-radius:15px;
+        border-left:8px solid #4CAF50;">
+        <h5>🟢 Active Users</h5>
+        <h2>{results['active_users']}</h2>
+        </div>
+        """, unsafe_allow_html=True)
 
-    st.metric(
-        "📈 Match %",
-        f"{results['match_percentage']}%"
-    )
+    with col3:
+        st.markdown(f"""
+        <div style="
+        background:#FFF8E1;
+        padding:20px;
+        border-radius:15px;
+        border-left:8px solid #FF9800;">
+        <h5>✅ Matched</h5>
+        <h2>{results['matched_users']}</h2>
+        </div>
+        """, unsafe_allow_html=True)
 
+    with col4:
+        st.markdown(f"""
+        <div style="
+        background:#FDECEA;
+        padding:20px;
+        border-radius:15px;
+        border-left:8px solid #F44336;">
+        <h5>❌ Mismatch</h5>
+        <h2>{results['mismatch_users']}</h2>
+        </div>
+        """, unsafe_allow_html=True)
 # ==========================================================
 # DOWNLOAD
 # ==========================================================
@@ -209,7 +242,7 @@ st.divider()
 excel = create_excel(results["mismatch_df"])
 
 st.download_button(
-    "📥 Download Mismatch Report",
+    "ðŸ“¥ Download Mismatch Report",
     data=excel,
     file_name="Mismatch_Report.xlsx",
     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"

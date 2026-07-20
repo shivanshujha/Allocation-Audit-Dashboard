@@ -37,27 +37,23 @@ def compare_allocations(df):
         df["Main_Allocation"]
     )
 
-    # An allocation of 0.0 represents an inactive user. Keep the full user
-    # totals unchanged, but expose an active-user KPI separately.
-    active_df = df[df["ALLOCATION"] != 0].copy()
-
     # =====================================
     # KPI Values
     # =====================================
 
     total_users = len(df)
 
-    active_users = len(active_df)
+    active_users = (
+        df["ALLOCATION"]
+        .fillna(0)
+        .astype(float)
+        .ne(0)
+        .sum()
+    )
 
     matched_users = int(df["Matched"].sum())
 
     mismatch_users = total_users - matched_users
-
-    match_percentage = (
-        round((matched_users / total_users) * 100, 2)
-        if total_users
-        else 0
-    )
 
     # =====================================
     # Create Mismatch Table
@@ -108,6 +104,5 @@ def compare_allocations(df):
         "active_users": active_users,
         "matched_users": matched_users,
         "mismatch_users": mismatch_users,
-        "match_percentage": match_percentage,
         "mismatch_df": mismatch_df
     }
