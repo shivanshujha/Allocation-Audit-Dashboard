@@ -8,6 +8,8 @@ Allocation Audit Dashboard.
 import io
 import pandas as pd
 from datetime import datetime
+from zoneinfo import ZoneInfo
+
 
 
 # ===================================================
@@ -15,11 +17,9 @@ from datetime import datetime
 # ===================================================
 
 def get_last_refresh():
-    """
-    Returns current system time.
-    """
-
-    return datetime.now().strftime("%d-%m-%Y %I:%M:%S %p")
+    return datetime.now(
+        ZoneInfo("Asia/Kolkata")
+    ).strftime("%d-%m-%Y %I:%M:%S %p")
 
 
 # ===================================================
