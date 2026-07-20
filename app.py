@@ -215,17 +215,21 @@ else:
 
         # Whole table
         .set_properties(**{
-            "background-color":"#A30000",
-            "color":"white",
-            "font-weight":"bold",
-            "text-align":"center"
+            "background-color":"#B71C1C",
+            "color":"#FFFFFF",
+            "font-weight":"800",
+            "text-align":"center",
+            "font-size":"17px",
+            "padding":"14px",
+            "border-bottom":"1px solid rgba(255,255,255,0.25)"
         })
 
         # User ID Bigger
         .set_properties(
             subset=["User ID"],
             **{
-                "font-size":"18px",
+                "color":"#FFF176",
+                "font-size":"19px",
                 "font-weight":"900"
             }
         )
@@ -237,28 +241,58 @@ else:
                 "Main Allocation"
             ],
             **{
-                "font-size":"15px"
+                "font-size":"18px",
+                "font-weight":"900"
             }
         )
 
         .set_table_styles([
             {
+                "selector": "table",
+                "props": [
+                    ("width", "100%"),
+                    ("border-collapse", "separate"),
+                    ("border-spacing", "0"),
+                    ("border-radius", "12px"),
+                    ("overflow", "hidden"),
+                    ("box-shadow", "0 8px 22px rgba(0,0,0,0.18)"),
+                ],
+            },
+            {
                 "selector": "th.col_heading",
                 "props": [
-                    ("background-color", "#B00020"),
-                    ("color", "#FFFFFF"),
+                    ("background-color", "#111827"),
+                    ("color", "#FDE68A"),
                     ("font-weight", "900"),
-                    ("font-size", "18px"),
+                    ("font-size", "19px"),
                     ("text-align", "center"),
                     ("text-transform", "uppercase"),
-                    ("border-bottom", "4px solid #FFD54F"),
-                    ("padding", "12px"),
+                    ("border-bottom", "5px solid #F59E0B"),
+                    ("padding", "15px"),
+                ],
+            },
+            {
+                "selector": "tbody tr:nth-child(even) td",
+                "props": [
+                    ("background-color", "#8B0000"),
+                ],
+            },
+            {
+                "selector": "tbody tr:hover td",
+                "props": [
+                    ("background-color", "#D32F2F"),
+                ],
+            },
+            {
+                "selector": "th.row_heading, th.blank",
+                "props": [
+                    ("display", "none"),
                 ],
             }
         ])
     )
 
-    st.table(styled)
+    st.markdown(styled.to_html(), unsafe_allow_html=True)
 
 
 # ==========================================================
