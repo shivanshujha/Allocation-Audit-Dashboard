@@ -54,8 +54,25 @@ header {visibility:hidden;}
 thead tr th{
     background:#8B0000 !important;
     color:white !important;
-    font-weight:bold !important;
+    font-weight:900 !important;
     text-align:center !important;
+    font-size:16px !important;
+    letter-spacing:0 !important;
+    text-transform:uppercase !important;
+    border-bottom:3px solid #FFB300 !important;
+}
+
+/* Streamlit dataframe header */
+[data-testid="stDataFrame"] [role="columnheader"],
+[data-testid="stDataFrame"] [data-testid="stDataFrameResizableHeader"]{
+    background:#8B0000 !important;
+    color:white !important;
+    font-weight:900 !important;
+    font-size:16px !important;
+    text-align:center !important;
+    letter-spacing:0 !important;
+    text-transform:uppercase !important;
+    border-bottom:3px solid #FFB300 !important;
 }
 
 /* Table Cells */
@@ -226,10 +243,15 @@ else:
 
         .set_table_styles([
             {
-                "selector": "th",
+                "selector": "th.col_heading",
                 "props": [
+                    ("background-color", "#8B0000"),
+                    ("color", "white"),
                     ("font-weight", "900"),
+                    ("font-size", "16px"),
                     ("text-align", "center"),
+                    ("text-transform", "uppercase"),
+                    ("border-bottom", "3px solid #FFB300"),
                 ],
             }
         ])
