@@ -16,7 +16,7 @@ from utils import get_last_refresh, create_excel
 
 st.set_page_config(
     page_title="Allocation Audit Dashboard",
-    page_icon="ðŸ“Š",
+    page_icon="📊",
     layout="wide"
 )
 
@@ -84,7 +84,7 @@ components.html(
 # HEADER
 # ==========================================================
 
-st.title("ðŸ“Š Allocation Audit Dashboard")
+st.title("📊 Allocation Audit Dashboard")
 
 st.caption(
     f"Last Refresh : {get_last_refresh()}  |  Auto Refresh : Every 30 Seconds"
@@ -121,7 +121,7 @@ except Exception as e:
 # KPI + TABLE
 # ==========================================================
 
-col1, col2, col3 = st.columns(3)
+col1, col2, col3, col4 = st.columns(4)
 
 with col1:
     st.markdown(f"""
@@ -152,6 +152,19 @@ with col2:
 with col3:
     st.markdown(f"""
     <div style="
+    background:linear-gradient(135deg,#FFF8E1,#FFE0B2);
+    padding:22px;
+    border-radius:16px;
+    border-left:8px solid #EF6C00;
+    box-shadow:0 4px 14px rgba(239,108,0,0.18);">
+    <h5 style="margin:0;color:#E65100;">✅ Matched Users</h5>
+    <h2 style="margin:8px 0 0;color:#E65100;">{results['matched_users']}</h2>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col4:
+    st.markdown(f"""
+    <div style="
     background:linear-gradient(135deg,#FDECEA,#FFCDD2);
     padding:22px;
     border-radius:16px;
@@ -168,11 +181,11 @@ st.markdown("<div style='height:18px;'></div>", unsafe_allow_html=True)
 # TABLE
 # ==========================================================
 
-st.subheader("âŒ Allocation Mismatch Users")
+st.subheader("❌ Allocation Mismatch Users")
 
 if results["mismatch_df"].empty:
 
-    st.success("ðŸŽ‰ All Users Matched")
+    st.success("🎉 All Users Matched")
 
 else:
 
@@ -226,7 +239,7 @@ st.divider()
 excel = create_excel(results["mismatch_df"])
 
 st.download_button(
-    "ðŸ“¥ Download Mismatch Report",
+    "📥 Download Mismatch Report",
     data=excel,
     file_name="Mismatch_Report.xlsx",
     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
