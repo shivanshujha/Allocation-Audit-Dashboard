@@ -43,7 +43,7 @@ def compare_allocations(df):
 
     total_users = len(df)
 
-    active_users = (
+    active_users = int(
         df["ALLOCATION"]
         .fillna(0)
         .astype(float)

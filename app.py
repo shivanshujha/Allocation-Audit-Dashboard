@@ -118,121 +118,105 @@ except Exception as e:
     raise SystemExit(1)
 
 # ==========================================================
-# TABLE + KPI
+# KPI + TABLE
 # ==========================================================
 
-left, right = st.columns([4,1])
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.markdown(f"""
+    <div style="
+    background:linear-gradient(135deg,#E3F2FD,#BBDEFB);
+    padding:22px;
+    border-radius:16px;
+    border-left:8px solid #1565C0;
+    box-shadow:0 4px 14px rgba(21,101,192,0.18);">
+    <h5 style="margin:0;color:#0D47A1;">👥 Total Users</h5>
+    <h2 style="margin:8px 0 0;color:#0D47A1;">{results['total_users']}</h2>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col2:
+    st.markdown(f"""
+    <div style="
+    background:linear-gradient(135deg,#E8F5E9,#C8E6C9);
+    padding:22px;
+    border-radius:16px;
+    border-left:8px solid #2E7D32;
+    box-shadow:0 4px 14px rgba(46,125,50,0.18);">
+    <h5 style="margin:0;color:#1B5E20;">🟢 Today's Active Users</h5>
+    <h2 style="margin:8px 0 0;color:#1B5E20;">{results['active_users']}</h2>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col3:
+    st.markdown(f"""
+    <div style="
+    background:linear-gradient(135deg,#FDECEA,#FFCDD2);
+    padding:22px;
+    border-radius:16px;
+    border-left:8px solid #C62828;
+    box-shadow:0 4px 14px rgba(198,40,40,0.18);">
+    <h5 style="margin:0;color:#B71C1C;">❌ Mismatch Users</h5>
+    <h2 style="margin:8px 0 0;color:#B71C1C;">{results['mismatch_users']}</h2>
+    </div>
+    """, unsafe_allow_html=True)
+
+st.markdown("<div style='height:18px;'></div>", unsafe_allow_html=True)
 
 # ==========================================================
-# LEFT
+# TABLE
 # ==========================================================
 
-with left:
+st.subheader("âŒ Allocation Mismatch Users")
 
-    st.subheader("âŒ Allocation Mismatch Users")
+if results["mismatch_df"].empty:
 
-    if results["mismatch_df"].empty:
+    st.success("ðŸŽ‰ All Users Matched")
 
-        st.success("ðŸŽ‰ All Users Matched")
+else:
 
-    else:
+    styled = (
+        results["mismatch_df"]
+        .style
+        .hide(axis="index")
 
-        styled = (
-            results["mismatch_df"]
-            .style
-            .hide(axis="index")
+        # Whole table
+        .set_properties(**{
+            "background-color":"#A30000",
+            "color":"white",
+            "font-weight":"bold",
+            "text-align":"center"
+        })
 
-            # Whole table
-            .set_properties(**{
-                "background-color":"#A30000",
-                "color":"white",
-                "font-weight":"bold",
-                "text-align":"center"
-            })
-
-            # User ID Bigger
-            .set_properties(
-                subset=["User ID"],
-                **{
-                    "font-size":"18px",
-                    "font-weight":"900"
-                }
-            )
-
-            # Allocation Font
-            .set_properties(
-                subset=[
-                    "Jainam Allocation",
-                    "Main Allocation"
-                ],
-                **{
-                    "font-size":"15px"
-                }
-            )
+        # User ID Bigger
+        .set_properties(
+            subset=["User ID"],
+            **{
+                "font-size":"18px",
+                "font-weight":"900"
+            }
         )
 
-        st.dataframe(
-            styled,
-            use_container_width=True,
-            hide_index=True,
+        # Allocation Font
+        .set_properties(
+            subset=[
+                "Jainam Allocation",
+                "Main Allocation"
+            ],
+            **{
+                "font-size":"15px"
+            }
         )
+    )
+
+    st.dataframe(
+        styled,
+        use_container_width=True,
+        hide_index=True,
+    )
 
 
-# ==========================================================
-# RIGHT KPI
-# ==========================================================
-
-with right:
-
-    col1, col2, col3, col4 = st.columns(4)
-
-    with col1:
-        st.markdown(f"""
-        <div style="
-        background:#E3F2FD;
-        padding:20px;
-        border-radius:15px;
-        border-left:8px solid #2196F3;">
-        <h5>👥 Total Users</h5>
-        <h2>{results['total_users']}</h2>
-        </div>
-        """, unsafe_allow_html=True)
-
-    with col2:
-        st.markdown(f"""
-        <div style="
-        background:#E8F5E9;
-        padding:20px;
-        border-radius:15px;
-        border-left:8px solid #4CAF50;">
-        <h5>🟢 Active Users</h5>
-        <h2>{results['active_users']}</h2>
-        </div>
-        """, unsafe_allow_html=True)
-
-    with col3:
-        st.markdown(f"""
-        <div style="
-        background:#FFF8E1;
-        padding:20px;
-        border-radius:15px;
-        border-left:8px solid #FF9800;">
-        <h5>✅ Matched</h5>
-        <h2>{results['matched_users']}</h2>
-        </div>
-        """, unsafe_allow_html=True)
-
-    with col4:
-        st.markdown(f"""
-        <div style="
-        background:#FDECEA;
-        padding:20px;
-        border-radius:15px;
-        border-left:8px solid #F44336;">
-        <h5>❌ Mismatch</h5>
-        <h2>{results['mismatch_users']}</h2>
-        </div>
-        """, unsafe_allow_html=True)
 # ==========================================================
 # DOWNLOAD
 # ==========================================================
