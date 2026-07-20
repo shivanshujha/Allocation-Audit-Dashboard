@@ -204,23 +204,30 @@ else:
             "text-align":"center"
         })
 
-        # User ID Bigger
+        # Highlight User ID
         .set_properties(
             subset=["User ID"],
             **{
+                "background-color":"#FFF3CD",
+                "color":"#5C3D00",
                 "font-size":"18px",
-                "font-weight":"900"
+                "font-weight":"900",
+                "text-align":"center"
             }
         )
 
-        # Allocation Font
+        # Highlight Allocation Columns
         .set_properties(
             subset=[
                 "Jainam Allocation",
                 "Main Allocation"
             ],
             **{
-                "font-size":"15px"
+                "background-color":"#E3F2FD",
+                "color":"#0D47A1",
+                "font-size":"16px",
+                "font-weight":"900",
+                "text-align":"center"
             }
         )
     )
