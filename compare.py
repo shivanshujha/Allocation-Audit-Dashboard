@@ -37,29 +37,30 @@ def compare_allocations(df):
         df["Main_Allocation"]
     )
 
+    active_df = df[
+        df["ALLOCATION"]
+        .fillna(0)
+        .astype(float)
+        .ne(0)
+    ].copy()
+
     # =====================================
     # KPI Values
     # =====================================
 
     total_users = len(df)
 
-    active_users = int(
-        df["ALLOCATION"]
-        .fillna(0)
-        .astype(float)
-        .ne(0)
-        .sum()
-    )
+    active_users = len(active_df)
 
-    matched_users = int(df["Matched"].sum())
+    matched_users = int(active_df["Matched"].sum())
 
-    mismatch_users = total_users - matched_users
+    mismatch_users = active_users - matched_users
 
     # =====================================
     # Create Mismatch Table
     # =====================================
 
-    mismatch_df = df[df["Matched"] == False].copy()
+    mismatch_df = active_df[active_df["Matched"] == False].copy()
 
     mismatch_df = mismatch_df[
         [

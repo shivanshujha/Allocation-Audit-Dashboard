@@ -189,6 +189,8 @@ if results["mismatch_df"].empty:
 
 else:
 
+    st.warning("⚠️ Check allocation of below user.")
+
     styled = (
         results["mismatch_df"]
         .style
