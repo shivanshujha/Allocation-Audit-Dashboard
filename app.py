@@ -245,23 +245,20 @@ else:
             {
                 "selector": "th.col_heading",
                 "props": [
-                    ("background-color", "#8B0000"),
-                    ("color", "white"),
+                    ("background-color", "#B00020"),
+                    ("color", "#FFFFFF"),
                     ("font-weight", "900"),
-                    ("font-size", "16px"),
+                    ("font-size", "18px"),
                     ("text-align", "center"),
                     ("text-transform", "uppercase"),
-                    ("border-bottom", "3px solid #FFB300"),
+                    ("border-bottom", "4px solid #FFD54F"),
+                    ("padding", "12px"),
                 ],
             }
         ])
     )
 
-    st.dataframe(
-        styled,
-        use_container_width=True,
-        hide_index=True,
-    )
+    st.table(styled)
 
 
 # ==========================================================
