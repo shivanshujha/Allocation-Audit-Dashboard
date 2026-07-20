@@ -204,32 +204,35 @@ else:
             "text-align":"center"
         })
 
-        # Highlight User ID
+        # User ID Bigger
         .set_properties(
             subset=["User ID"],
             **{
-                "background-color":"#FFF3CD",
-                "color":"#5C3D00",
                 "font-size":"18px",
-                "font-weight":"900",
-                "text-align":"center"
+                "font-weight":"900"
             }
         )
 
-        # Highlight Allocation Columns
+        # Allocation Font
         .set_properties(
             subset=[
                 "Jainam Allocation",
                 "Main Allocation"
             ],
             **{
-                "background-color":"#E3F2FD",
-                "color":"#0D47A1",
-                "font-size":"16px",
-                "font-weight":"900",
-                "text-align":"center"
+                "font-size":"15px"
             }
         )
+
+        .set_table_styles([
+            {
+                "selector": "th",
+                "props": [
+                    ("font-weight", "900"),
+                    ("text-align", "center"),
+                ],
+            }
+        ])
     )
 
     st.dataframe(
