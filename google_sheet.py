@@ -60,7 +60,7 @@ def load_jainam_data():
     """
 
     client = get_client()
-    workbook = client.open("All User Details Daily Updated")
+    workbook = client.open("test_streamlit")
     worksheet = workbook.worksheet("Jainam")
     records = worksheet.get_all_records()
     df = pd.DataFrame(records)
