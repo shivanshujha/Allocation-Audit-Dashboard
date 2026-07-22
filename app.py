@@ -101,7 +101,7 @@ components.html(
 # HEADER
 # ==========================================================
 
-st.title("📊 Allocation Audit Dashboard Jainam")
+st.title("📊 Jainam Allocation Audit Dashboard ")
 
 st.caption(
     f"Last Refresh : {get_last_refresh()}  |  Auto Refresh : Every 30 Seconds"
